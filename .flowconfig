@@ -1,0 +1,11 @@
+[ignore]
+.*/build
+.*/config
+.*/node_modules
+.*/gulpfile.js
+
+[include]
+./js
+
+[libs]
+./js/libs

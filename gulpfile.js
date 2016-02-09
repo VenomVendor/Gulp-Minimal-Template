@@ -34,6 +34,7 @@ const jsDest = `${dest}/js`;
 const DEBUG = false;
 const ES6 = false;
 const SHOULD_RENAME = false;
+const PORT = 8080;
 
 /**
  * Files to be copied.
@@ -159,14 +160,13 @@ gulp.task('watch', () => {
  * open default uri.
  */
 gulp.task('webserver', () => {
-    const port = 8080;
     connect.server({
         livereload: true,
-        port
+        port: PORT
     });
     gulp.src('')
         .pipe(open({
-            uri: `http://localhost:${port}`
+            uri: `http://localhost:${PORT}`
         }));
 });
 

@@ -1,5 +1,3 @@
-'use strict';
-
 /* eslint-disable func-names, arrow-body-style */
 
 const autoprefixer = require('gulp-autoprefixer');

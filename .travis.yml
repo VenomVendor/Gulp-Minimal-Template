@@ -1,0 +1,10 @@
+before_script:
+  - npm i -g gulp
+  - npm i
+script: gulp
+
+# whitelist
+branches:
+  only:
+    - master
+    - develop

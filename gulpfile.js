@@ -31,9 +31,10 @@ const dest = 'dist';
 const cssDest = `${dest}/css`;
 const jsDest = `${dest}/js`;
 
-const DEBUG = true;
+const DEBUG = false;
 const ES6 = false;
 const SHOULD_RENAME = false;
+const PORT = 8080;
 
 /**
  * Files to be copied.
@@ -90,9 +91,9 @@ gulp.task('sass', () => {
         .pipe(csscomb())
         .pipe(gulp.dest(cssDest))
         .pipe(DEBUG ? gutil.noop() : cssnano())
-        .pipe(rename({
+        .pipe(SHOULD_RENAME ? rename({
             suffix: '.min'
-        }))
+        }) : gutil.noop())
         .pipe(gulp.dest(cssDest));
 });
 
@@ -159,14 +160,13 @@ gulp.task('watch', () => {
  * open default uri.
  */
 gulp.task('webserver', () => {
-    const port = 8080;
     connect.server({
         livereload: true,
-        port
+        port: PORT
     });
     gulp.src('')
         .pipe(open({
-            uri: `http://localhost:${port}`
+            uri: `http://localhost:${PORT}`
         }));
 });
 

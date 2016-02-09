@@ -31,7 +31,7 @@ const dest = 'dist';
 const cssDest = `${dest}/css`;
 const jsDest = `${dest}/js`;
 
-const DEBUG = true;
+const DEBUG = false;
 const ES6 = false;
 const SHOULD_RENAME = false;
 
@@ -90,9 +90,9 @@ gulp.task('sass', () => {
         .pipe(csscomb())
         .pipe(gulp.dest(cssDest))
         .pipe(DEBUG ? gutil.noop() : cssnano())
-        .pipe(rename({
+        .pipe(SHOULD_RENAME ? rename({
             suffix: '.min'
-        }))
+        }) : gutil.noop())
         .pipe(gulp.dest(cssDest));
 });
 

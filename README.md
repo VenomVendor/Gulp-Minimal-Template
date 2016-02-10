@@ -1,4 +1,4 @@
-# Gulp-Minimal-Template
+# Gulp-Minimal-Template [![Build Status](https://travis-ci.org/VenomVendor/Gulp-Minimal-Template.svg?branch=master)](https://travis-ci.org/VenomVendor/Gulp-Minimal-Template)
   Getting started with Gulp which runs as task runnner & local server, serving static files similar to express in node.
 
 # clone

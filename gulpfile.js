@@ -41,7 +41,7 @@ const PORT = 8080;
  */
 const copier = (files) => {
     /* eslint-disable object-curly-spacing */
-    gulp.src(files, {base: './'})
+    return gulp.src(files, {base: './'})
         /* eslint-enable object-curly-spacing */
         .pipe(plumber())
         .pipe(gulp.dest(dest));
@@ -106,7 +106,7 @@ gulp.task('js-lint', () => {
 });
 
 /**
- * es-lint gruntfile.js
+ * es-lint gulpfile.js
  */
 gulp.task('js-self-lint', () => {
     return gulp.src(['*.js'])
@@ -141,16 +141,16 @@ gulp.task('js-uglify', () => {
 
 gulp.task('clean-copy', () => {
     deleteFilesDirs(dest);
-    copier([libSrc]);
+    return copier([libSrc]);
 });
 
 /**
  * watch for changes is sass & js files.
  */
 gulp.task('watch', () => {
-    gulp.watch(['gulpfile.js'], ['js-self-lint']);
-    gulp.watch(cssSrc, ['sass']);
-    gulp.watch(jsSrc, ['js-lint', 'js-uglify']);
+    gulp.watch(['gulpfile.js'], gulp.series('js-self-lint'));
+    gulp.watch(cssSrc, gulp.series('sass'));
+    gulp.watch(jsSrc, gulp.series('js-lint', 'js-uglify'));
 });
 
 /**
@@ -162,7 +162,7 @@ gulp.task('webserver', () => {
         livereload: true,
         port: PORT
     });
-    gulp.src('')
+    gulp.src('./')
         .pipe(open({
             uri: `http://localhost:${PORT}`
         }));
@@ -176,6 +176,11 @@ gulp.task('livereload', () => {
         .pipe(connect.reload());
 });
 
+
 /* default task */
-gulp.task('default', ['js-self-lint', 'clean-copy', 'sass', 'js-lint', 'js-uglify', 'webserver', 'livereload',
-    'watch']);
+gulp.task('default', gulp.series(
+    gulp.parallel(['js-self-lint', 'clean-copy']),
+    gulp.parallel(['sass', 'js-lint']),
+    gulp.series('js-uglify'),
+    gulp.parallel(['webserver', 'livereload', 'watch'])
+));
